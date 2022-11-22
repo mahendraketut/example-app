@@ -7,13 +7,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>
-        @hasSection('title')
-            @yield('title') | {{ config('app.name', 'Laravel') }}
-        @else
-            {{ config('app.name', 'Laravel') }}
-        @endif
-    </title>
+
+    <title>SchoolHELP - @yield('title')</title>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
