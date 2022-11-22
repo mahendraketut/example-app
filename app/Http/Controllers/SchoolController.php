@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\School;
 use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class SchoolController extends Controller
 {
@@ -15,8 +16,11 @@ class SchoolController extends Controller
     public function index()
     {
         $school = School::all();
-        return view('school.index', ['school' => $school]);
+        return view('school/index', ['school' => $school]);
+        // return view('school/index');
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -25,7 +29,7 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        return view('school.create');
+        return view('school/create');
     }
 
     /**
@@ -36,7 +40,31 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //id generator using haruncpi/laravel-id-generator
+        $config = [
+            'table' => 'schools',
+            'field' => 'schoolId',
+            'length' => 6,
+            'prefix' => 'SCH'
+        ];
+
+        //using id generator to save to schoolid column in schools table
+        $schoolId = IdGenerator::generate($config);
+
+        $this->validate(request(), [
+            //put fields to be validated here
+            'schoolname' => 'required',
+            'schooladdress' => 'required',
+            'schoolcity' => 'required',
+        ]);
+
+        $school = new School();
+        $school->schoolId = $schoolId;
+        $school->schoolname = $request['schoolname'];
+        $school->schooladdress = $request['schooladdress'];
+        $school->schoolcity = $request['schoolcity'];
+        $school->save();
+        return redirect()->route('school-index')->with('success', 'School created successfully');
     }
 
     /**
