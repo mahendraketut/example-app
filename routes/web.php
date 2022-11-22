@@ -20,13 +20,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/school', [App\Http\Controllers\SchoolController::class, 'index'])->name('school.index');
-Route::get('/school/create', [App\Http\Controllers\SchoolController::class, 'create'])->name('school.create');
-Route::post('/school/store', [App\Http\Controllers\HomeController::class, 'store'])->name('school.store');
+Route::get('/school', [App\Http\Controllers\SchoolController::class, 'index'])->name('school-index');
+Route::get('/create', [App\Http\Controllers\SchoolController::class, 'create'])->name('school-create');
+Route::post('/store', [App\Http\Controllers\SchoolController::class, 'store'])->name('school-store');
 
+// todo: add the namespace => (gak tau yang mana yang dipake)
+// Route::group(['namespace' => 'SchoolController'], function () {
+//     Route::get('/school', 'SchoolController@index')->name('school-index');
+//     Route::get('school/create', 'SchoolController@create')->name('school-create');
+// });
 
 //Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 });
+

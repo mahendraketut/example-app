@@ -5,14 +5,14 @@
 @endsection
 
 @section('css')
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="sbadmin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 @endsection
 
 @section('js')
     <!-- Page level plugins -->
     {{-- <script src="sbadmin/vendor/chart.js/Chart.min.js"></script> --}}
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="sbadmin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="sbadmin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     {{-- <!-- Page level custom scripts -->
     <script src="sbadmin/js/demo/chart-area-demo.js"></script>
@@ -21,12 +21,15 @@
 @endsection
 
 @section('content')
+@include('school.modalCreateSchool')
+
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">School</h1>
-        <a href="{{asset('#')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-home fa-sm text-white-50"></i> Create New School</a>
+
+        <button data-toggle="modal" data-target="#modalCreateSchool" type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-home fa-sm text-white-50" ></i> Create New School</button>
     </div>
 
     <!-- Content Row -->
@@ -42,6 +45,7 @@
                         @if(!empty($school))
                             <thead>
                                 <tr>
+                                    <th>School ID</th>
                                     <th>School</th>
                                     <th>Address</th>
                                     <th>City</th>
@@ -58,6 +62,7 @@
                         </tfoot> --}}
                         @forelse ($school as $school)
                             <tr>
+                                <td>{{ $school->schoolId }}</td>
                                 <td>{{ $school->schoolname }}</td>
                                 <td>{{ $school->schooladdress }}</td>
                                 <td>{{ $school->schoolcity }}</td>
@@ -87,5 +92,5 @@
     <!-- /.container-fluid -->
 </div>
 
-
 @endsection
+
